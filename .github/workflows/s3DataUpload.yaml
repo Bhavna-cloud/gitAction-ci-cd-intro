@@ -25,4 +25,9 @@ jobs:
       # Upload a file to AWS s3
       - name: Copy index.html to s3
         run: |
-          aws s3 cp ./index.html s3://${{ env.BUCKET_NAME }}/
+          if [ -f "./index.html" ]; then
+            aws s3 cp ./index.html s3://${{ env.BUCKET_NAME }}/
+          else
+            echo "❌ index.html not found!"
+            exit 1
+          fi
